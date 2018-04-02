@@ -37,6 +37,9 @@
 	 
 8. 日志管理
 	Log::getInstance($path)->write($str);
+	
+9. MVC
+	modules/目录下，每个模块一个文件夹，如 index/{controller},{model},{view}
 
 
 此框架主要是为了提供常用的简单功能，代码速度等快速开发的需要而定制
