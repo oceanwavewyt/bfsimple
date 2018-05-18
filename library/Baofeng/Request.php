@@ -16,11 +16,12 @@ class Request {
 
     /**
      * @param $name 参数的名字
+	 * @param $default 默认值
      * @return mixed|null
      */
-    public function get($name) {
+    public function get($name,$default=null) {
         if(isset(self::$_params[$name])) return self::$_params[$name];
-        return null;
+        return $default;
     }
 
     /**
