@@ -2,13 +2,15 @@
 class Model {
     private static $_dbconf = [];
     public static $_db = null;
-    public static $_model = null;
+    public static $_model = [];
     public $_table = null;
     public static function getInstance(){
-        if(self::$_model != null) return self::$_model;
-        self::$_model = new static();
-        return self::$_model;
+        $name = get_called_class();
+        if(isset(self::$_model[$name])) return self::$_model[$name];
+        self::$_model[$name] = new static();
+        return self::$_model[$name];
     }
+
 
     public function __construct() {}
 
