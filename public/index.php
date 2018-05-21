@@ -1,5 +1,6 @@
 <?php
 defined('PROJECT_ROOT') || define('PROJECT_ROOT', realpath(dirname(dirname(__FILE__))).'/');
+defined('PROJECT_WWW') || define('PROJECT_WWW', realpath(dirname(__FILE__)).'/');
 include "../vendor/autoload.php";
 
 $c = new Core();
