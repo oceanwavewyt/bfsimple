@@ -90,7 +90,7 @@ class Request {
                 self::$_params[$this->paramConf[$id]] = $params[$id];
             }else{
                 $arr = explode('=', $name);
-                if(count($arr[0]) == 2) {
+                if(count($arr) == 2) {
                     self::$_params[$arr[0]] = $arr[1];
                 }else{
                     self::$_params[$id] = $arr[0];
