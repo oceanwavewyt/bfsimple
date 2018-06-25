@@ -15,7 +15,7 @@
 		/module/controller/action/[othername/othervalue]
 		如：/index/index/list/env/1  => module=index,controller=index,action=list,env=1
 	c). (在controller)获得参数：
-		c_1). $this->request->get($paramName); => 如： $this->request->get('env');
+		c_1). $this->request->get($paramName,''); => 如： $this->request->get('env');
 		c_2). $this->request->gets(); //获得所有参数;
 ### 自动加载
 		php composer.phar install
