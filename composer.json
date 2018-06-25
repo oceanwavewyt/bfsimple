@@ -6,6 +6,7 @@
     "classmap": ["modules/","library/Smarty/","library/Baofeng/"],
     "psr-0" : {"" : "modules",
                "":"library/Smarty",
-               "":"library/Baofeng"}
+               "":"library/Baofeng"},
+    "include-path" : ["modules/"]
   }
 }
