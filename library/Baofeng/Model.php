@@ -86,6 +86,7 @@ class Model {
         if(empty(self::$_dbconf)) throw new Exception('db config file is null');
         try {
             self::$_db = new PDO($dsn='mysql:host='.self::$_dbconf['host'].';dbname='.self::$_dbconf['dbname'].';charset=utf8',self::$_dbconf['user'],self::$_dbconf['password']);
+            self::$_db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         }catch (Exception $e) {
             throw new Exception($e->getMessage());
         }
