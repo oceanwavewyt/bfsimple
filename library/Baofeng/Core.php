@@ -36,6 +36,7 @@ class Core {
         if(isset($baseConf['auth']) && $baseConf['auth'] == 'on') {
             $authConf = $this->_request->getConfig('auth');
             Auth::check($authConf, $module, $controller, $action);
+            $this->_request->setUser($authConf);
         }
         $cont = new $className();
         $actionName = $action.'Action';

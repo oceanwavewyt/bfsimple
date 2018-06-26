@@ -3,6 +3,7 @@ class Request {
     public static $_params = [];
     public static $_urlparams = [];
     public static $_config = [];
+    public static $_user = [];
     private  $paramConf = ['1'=>'module','2'=>'controller','3'=>'action'];
     function __construct() {
         if(isset($_SERVER['env'])) {
@@ -48,6 +49,26 @@ class Request {
      */
     public function posts() {
         return $_POST;
+    }
+
+    /**
+     * 获得用户的信息
+     * @return array
+     */
+    public function user() {
+        return self::$_user;
+    }
+
+    /**
+     * @param $conf
+     */
+    public function setUser(&$conf) {
+        if(!isset($conf['cookie']) || !is_array($conf['cookie'])) return false;
+        foreach($conf['cookie'] as $val) {
+            if(!isset($_COOKIE[$val])) continue;
+            self::$_user[$val] = $_COOKIE[$val];
+        }
+        return true;
     }
 
     /**
