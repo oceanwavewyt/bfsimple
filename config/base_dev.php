@@ -21,5 +21,7 @@ return [
         'user' => 'root',
         'password' => '123456',
         'dbname' => 'cms',
-    ]
+    ],
+    'auth' => 'on',
+
 ];

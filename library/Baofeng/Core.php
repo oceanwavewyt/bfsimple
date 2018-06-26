@@ -18,11 +18,11 @@ class Core {
             $path = PROJECT_ROOT.$baseConf['log'];
             Log::getInstance($path)->write(json_encode($this->_request->getUrlParams()));
         }
-        $this->route();
+        $this->route($baseConf);
     }
 
 
-    private function route() {
+    private function route(&$baseConf) {
         $default = ['module'=>'index','controller'=>'Index','action'=>'index'];
         foreach($default as $name=>$defval) {
             if(empty($this->_request->get($name)) || trim($this->_request->get($name)) == '') {
@@ -33,10 +33,14 @@ class Core {
         }
         $className = $module.'_'.ucfirst($controller).'Controller';
         if(!class_exists($className)) throw new Exception($className.' not found.');
+        if(isset($baseConf['auth']) && $baseConf['auth'] == 'on') {
+            $authConf = $this->_request->getConfig('auth');
+            Auth::check($authConf, $module, $controller, $action);
+        }
         $cont = new $className();
         $actionName = $action.'Action';
         if(!method_exists($cont, $actionName)) throw new Exception($actionName.' not found.');
-        $dbconf = $this->_request->getConfig('base','db');
+        $dbconf = $baseConf['db'];
         if(!empty($dbconf)) {
             Model::setDatabaseConf($dbconf);
         }

@@ -20,6 +20,7 @@ return [
         'port' => 3306,
         'user' => 'root',
         'password' => '123456',
-        'dbname' => 'cms',
-    ]
+        'dbname' => 'zhoubao',
+    ],
+    'auth' => 'on',
 ];
