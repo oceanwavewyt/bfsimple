@@ -42,7 +42,7 @@
 	modules/目录下，每个模块一个文件夹，如 index/{controller},{model},{view}
 
 ### 后台登录
-在confg/base.php中开启 'auth' => 'on', 有登录功能，数据验证需要自己在controller中实现登录，成功验证需要调用：
-Auth::success($this->request,$data); 即可 $data参数具体根据auth.php中的cookie参数来设置
+	在confg/base.php中开启 'auth' => 'on', 有登录功能，数据验证需要自己在controller中实现登录，成功验证需要调用：
+	Auth::success($this->request,$data); 即可 $data参数具体根据auth.php中的cookie参数来设置字段
 	
 此框架主要是为了提供常用的简单功能，代码速度等快速开发的需要而定制
