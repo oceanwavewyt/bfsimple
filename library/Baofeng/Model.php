@@ -20,13 +20,17 @@ class Model {
      */
     public function insert($data) {
         if(empty($this->_table)) throw new Exception('table is null');
-        $sql = 'insert into '.$this->_table;
+        $sql = 'insert into `'.$this->_table.'` ';
         $keys = array_keys($data);
         $sql .= '(`'.implode('`,`',$keys).'`) ';
         $valkeys = array_map(function($str){return '?';},$keys);
         $sql .= ' values ('.implode(',',$valkeys).')';
         $sth = $this->getDb()->prepare($sql);
-        return $sth->execute(array_values($data));
+        if ($sth->execute(array_values($data))) {
+            return $this->lastInsertId();
+        } else {
+            return false;
+        }
     }
     /**
      * @param $set 设置值
@@ -36,7 +40,7 @@ class Model {
      */
     public function update($set, $where, $whereStr='') {
         if(empty($this->_table)) throw new Exception('table is null');
-        $sql = 'update '.$this->_table.' set ';
+        $sql = 'update `'.$this->_table.'` set ';
         $setData  = [];
         $setVal = [];
         foreach($set as $key=>$val){
