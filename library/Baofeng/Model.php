@@ -26,7 +26,11 @@ class Model {
         $valkeys = array_map(function($str){return '?';},$keys);
         $sql .= ' values ('.implode(',',$valkeys).')';
         $sth = $this->getDb()->prepare($sql);
-        return $sth->execute(array_values($data));
+        if ($sth->execute(array_values($data))) {
+            return $this->lastInsertId();
+        } else {
+            return false;
+        }
     }
     /**
      * @param $set 设置值
