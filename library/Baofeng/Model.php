@@ -15,6 +15,20 @@ class Model {
     public function __construct() {}
 
     /**
+     * @param $data array
+     * 插入数据到数据库中
+     */
+    public function insert($data) {
+        if(empty($this->_table)) throw new Exception('table is null');
+        $sql = 'insert into '.$this->_table;
+        $keys = array_keys($data);
+        $sql .= '(`'.implode('`,`',$keys).'`) ';
+        $valkeys = array_map(function($str){return '?';},$keys);
+        $sql .= ' values ('.implode(',',$valkeys).')';
+        $sth = $this->getDb()->prepare($sql);
+        return $sth->execute(array_values($data));
+    }
+    /**
      * @param $set 设置值
      * @param $where 条件数字
      * @param string $whereStr 条件字符串，如果不传默认是where参数都是and连接
