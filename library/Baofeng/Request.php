@@ -25,11 +25,29 @@ class Request {
     }
 
     /**
+     * @param $name 参数的名字
+     * @param $default 默认值
+     * @return mixed|null
+     */
+    public function post($name, $default=null) {
+        if(isset($_POST[$name])) return $_POST[$name];
+        return $default;
+    }
+
+    /**
      * 获得所有的参数
      * @return array
      */
     public function gets() {
         return self::$_params;
+    }
+
+    /**
+     * 获得所有的参数
+     * @return array
+     */
+    public function posts() {
+        return $_POST;
     }
 
     /**
@@ -79,7 +97,7 @@ class Request {
                 }
             }
             self::$_urlparams = self::$_params;
-            self::$_params = array_merge(self::$_params, $_POST);
+            //self::$_params = array_merge(self::$_params, $_POST);
         }
     }
     private function cli() {
