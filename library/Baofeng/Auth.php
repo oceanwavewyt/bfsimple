@@ -45,13 +45,22 @@ class Auth {
     }
 
     /**
+     * @param $request 请求对象
      * @param $params 需要和auth.php配置文件中的cookie参数一致
+     * @param $out 0:登录;1:退出
      * 如 [$id,$username,$email]
      *
      */
-    public static function success($request, $params) {
+    public static function success($request, $params, $out=0) {
         $config = $request->getConfig('auth');
         if(!isset($config['cookie']))  throw new Exception("请配置auth.php中的cookie参数");
+        if($out) {
+            foreach($config['cookie'] as $cid) {
+                setcookie($cid,null,time(),'/');
+            }
+            setcookie(self::$cookieAuthName,null,time(),'/');
+            return true;
+        }
         $idstr = [];
         foreach($config['cookie'] as $cid) {
             if(!isset($params[$cid]))  throw new Exception("cookie参数失败");
