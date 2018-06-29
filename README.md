@@ -45,5 +45,6 @@
 	a). 在confg/base.php中开启 'auth' => 'on', 有登录功能，数据验证需要自己在controller中实现登录，成功验证需要调用：
 	     Auth::success($this->request,$data); 即可 $data参数具体根据auth.php中的cookie参数来设置字段
 	b). 取得用户信息： $this->request->user();
+	c). 用户退出： Auth::success($this->request, [], 1);
 	
 此框架主要是为了提供常用的简单功能，代码速度等快速开发的需要而定制
