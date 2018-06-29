@@ -1,9 +1,9 @@
 <?php
 class Request {
-    public static $_params = [];
-    public static $_urlparams = [];
-    public static $_config = [];
-    public static $_user = [];
+    private static $_params = [];
+    private static $_urlparams = [];
+    private static $_config = [];
+    private static $_user = [];
     private  $paramConf = ['1'=>'module','2'=>'controller','3'=>'action'];
     function __construct() {
         if(isset($_SERVER['env'])) {
@@ -13,6 +13,18 @@ class Request {
             self::$_params['env'] = $_SERVER['ENV'];
         }
         $this->parserParams();
+    }
+
+    /**
+     * @return string
+     * 取得当前的访问url
+     */
+    public function getUrl() {
+        $url = [''];
+        foreach($this->paramConf as $val) {
+            $url[] = self::$_urlparams[$val];
+        }
+        return strtolower(implode('/',$url));
     }
 
     /**

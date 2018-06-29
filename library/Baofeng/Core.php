@@ -38,13 +38,18 @@ class Core {
             Auth::check($authConf, $module, $controller, $action);
             $this->_request->setUser($authConf);
         }
-        $cont = new $className();
-        $actionName = $action.'Action';
-        if(!method_exists($cont, $actionName)) throw new Exception($actionName.' not found.');
         $dbconf = $baseConf['db'];
         if(!empty($dbconf)) {
             Model::setDatabaseConf($dbconf);
         }
+        if(isset($baseConf['aclFunction'])) {
+            if(!call_user_func($baseConf['aclFunction'], $this->_request)) {
+                die('无权限!');
+            }
+        }
+        $cont = new $className();
+        $actionName = $action.'Action';
+        if(!method_exists($cont, $actionName)) throw new Exception($actionName.' not found.');
         $cont->init($this->_request);
         return $cont->$actionName();
     }

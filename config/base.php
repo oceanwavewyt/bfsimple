@@ -19,8 +19,9 @@ return [
         'host' => '192.168.200.36',
         'port' => 3306,
         'user' => 'root',
-        'password' => '123456',
+        'password' => '223238',
         'dbname' => 'zhoubao',
     ],
     'auth' => 'on',
+    'aclFunction' => 'Group_Model_User::getAcl',
 ];
