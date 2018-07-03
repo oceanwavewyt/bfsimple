@@ -33,18 +33,20 @@ class Core {
         }
         $className = $module.'_'.ucfirst($controller).'Controller';
         if(!class_exists($className)) throw new Exception($className.' not found.');
-        if(isset($baseConf['auth']) && $baseConf['auth'] == 'on') {
-            $authConf = $this->_request->getConfig('auth');
-            Auth::check($authConf, $module, $controller, $action);
-            $this->_request->setUser($authConf);
-        }
-        $dbconf = $baseConf['db'];
-        if(!empty($dbconf)) {
-            Model::setDatabaseConf($dbconf);
-        }
-        if(isset($baseConf['aclFunction'])) {
-            if(!call_user_func($baseConf['aclFunction'], $this->_request)) {
-                die('无权限!');
+        if(!$this->_request->getCli()) {
+            if (isset($baseConf['auth']) && $baseConf['auth'] == 'on') {
+                $authConf = $this->_request->getConfig('auth');
+                Auth::check($authConf, $module, $controller, $action);
+                $this->_request->setUser($authConf);
+            }
+            $dbconf = $baseConf['db'];
+            if (!empty($dbconf)) {
+                Model::setDatabaseConf($dbconf);
+            }
+            if (isset($baseConf['aclFunction'])) {
+                if (!call_user_func($baseConf['aclFunction'], $this->_request)) {
+                    die('无权限!');
+                }
             }
         }
         $cont = new $className();

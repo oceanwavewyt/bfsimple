@@ -4,6 +4,7 @@ class Request {
     private static $_urlparams = [];
     private static $_config = [];
     private static $_user = [];
+    private $isCli = false;
     private  $paramConf = ['1'=>'module','2'=>'controller','3'=>'action'];
     function __construct() {
         if(isset($_SERVER['env'])) {
@@ -15,6 +16,9 @@ class Request {
         $this->parserParams();
     }
 
+    public function getCli(){
+        return $this->isCli;
+    }
     /**
      * @return string
      * 取得当前的访问url
@@ -110,6 +114,7 @@ class Request {
         if(PHP_SAPI == 'cli') {
             $ok = $this->cli();
             if(!$ok) throw new Exception("parameter error,need for modules controller action");
+            $this->isCli = true;
         }else{
             $params = explode('&',$_SERVER["QUERY_STRING"]);
             $arr = explode('/', $params[0]);
